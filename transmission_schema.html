@@ -610,6 +610,19 @@
   }
   .footer-cta a:hover { background: #e8edf8; }
 
+  .mob-scroll-hint {
+    display: none;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--pen);
+    background: var(--pen-tint);
+    border: 1px solid rgba(31, 63, 160, 0.2);
+    border-radius: 5px;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
   @media (max-width: 980px) {
     .hero { grid-template-columns: 1fr; }
     .hero-meta { text-align: left; }
@@ -617,6 +630,39 @@
     .kpi-grid { grid-template-columns: repeat(2, 1fr); }
     .kin-grid { grid-template-columns: repeat(2, 1fr); }
     .f-list { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .topbar { position: static; }
+    .topbar-in { padding: 10px 14px; gap: 8px; }
+    .brand { width: 100%; justify-content: space-between; align-items: center; }
+    .brand-name { font-size: 13px; }
+    .nav-links {
+      width: 100%;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 2px;
+      gap: 6px;
+    }
+    .nav-links a { white-space: nowrap; font-size: 12px; padding: 5px 10px; }
+    .nav-links a.cta-3d { order: -1; }
+    .wrap { padding: 18px 14px 44px; }
+    h1 { font-size: 30px; }
+    .sec-head h2 { font-size: 23px; }
+    .scenario-bar {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+    }
+    .sc-btn { white-space: nowrap; font-size: 12px; padding: 6px 11px; flex-shrink: 0; }
+    .mob-scroll-hint { display: block; }
+    .diagram-frame { padding: 10px; -webkit-overflow-scrolling: touch; }
+    .kin-grid { grid-template-columns: 1fr; }
+    .kpi .k-val { font-size: 22px; }
+    .footer-cta { padding: 16px 18px; }
+    .footer-cta h3 { font-size: 22px; }
   }
 </style>
 </head>
@@ -671,6 +717,7 @@
       <button class="sc-btn" data-sc="brake">6. Freinage d'arrêt</button>
     </div>
 
+    <div class="mob-scroll-hint">↔ Glisse le schéma horizontalement (ou tourne ton téléphone en paysage) · Clique un bloc pour les détails</div>
     <div class="diagram-frame">
       <svg id="chain-svg" viewBox="0 0 1240 500" role="img" aria-labelledby="chain-schema-title chain-schema-desc" xmlns="http://www.w3.org/2000/svg">
         <title id="chain-schema-title">Chaîne de transmission mécanique et relations entre Accouplement, Embrayage, Boîte de vitesses et Frein</title>

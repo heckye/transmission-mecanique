@@ -272,8 +272,116 @@
   }
   .bm-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+  /* Mobile drawer toggle button (hidden on desktop) */
+  .bm-mob-toggle {
+    display: none;
+    width: 100%;
+    border: none;
+    border-top: 1px solid rgba(26, 37, 80, 0.1);
+    background: transparent;
+    color: var(--pen);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 7px 0 2px;
+    margin-top: 8px;
+    cursor: pointer;
+    text-align: center;
+  }
+
   @media (max-width: 900px) {
-    .bm-info { display: none; }
+    .bm-info { display: none !important; }
+  }
+
+  @media (max-width: 820px) {
+    .bm-top {
+      left: 10px; right: 10px; top: 10px;
+      flex-wrap: nowrap;
+      gap: 6px;
+    }
+    .bm-focus {
+      flex: 1 1 auto;
+      min-width: 0;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 3px;
+      gap: 3px;
+    }
+    .bm-focus::-webkit-scrollbar { display: none; }
+    .bm-focus button {
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-size: 11.5px;
+      padding: 5px 10px;
+    }
+    .bm-schema-link {
+      flex-shrink: 0;
+      font-size: 11px;
+      padding: 6px 10px;
+      white-space: nowrap;
+    }
+    .bm-full { display: none; }
+
+    /* Compact bottom drawer on phones so upper 60% stays pure 3D! */
+    .lab-side {
+      top: auto !important;
+      bottom: 54px !important;
+      left: 10px !important;
+      right: 10px !important;
+      width: auto !important;
+      transform: none !important;
+      padding: 10px 12px 8px !important;
+      border-radius: 12px !important;
+      max-height: 62vh;
+      overflow-y: auto;
+    }
+    .lab-no, .lab-title { display: none !important; }
+    .lab-metric {
+      margin-top: 0 !important;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+      column-gap: 10px;
+      align-items: baseline;
+    }
+    .lab-metric .lbl { grid-column: 1 / -1; font-size: 11px !important; margin-bottom: 2px; }
+    .lab-big { font-size: 32px !important; line-height: 1 !important; }
+    .lab-big i { font-size: 0.42em !important; }
+    .lab-bar { display: none !important; }
+    .lab-sub { font-size: 10.5px !important; line-height: 1.3 !important; }
+    .bm-gears { margin-top: 7px !important; }
+    .bm-gears .g-head { font-size: 11px !important; margin-bottom: 4px !important; }
+    .bm-gear-row button { padding: 6px 0 !important; font-size: 11.5px !important; }
+
+    /* Sliders hidden until user taps "Commandes" drawer toggle */
+    .bm-mob-toggle { display: block; }
+    .lab-side:not(.mob-open) .lab-ctl { display: none !important; }
+    .lab-side.mob-open .lab-ctl { margin-top: 8px !important; }
+
+    /* Single clean scrollable bottom bar for studio modes (no <kbd> clutter) */
+    .lab-modes {
+      left: 10px !important;
+      right: 10px !important;
+      bottom: 8px !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 3px 4px !important;
+      gap: 4px !important;
+    }
+    .lab-modes::-webkit-scrollbar { display: none; }
+    .lab-modes button {
+      white-space: nowrap;
+      flex-shrink: 0;
+      padding: 6px 11px !important;
+      font-size: 11.5px !important;
+    }
+    .lab-modes kbd { display: none !important; }
+    .lab-how, .lab-scale { display: none !important; }
+    .bm-toast { top: 56px; font-size: 11.5px; max-width: 90vw; padding: 6px 10px; }
   }
 </style>
 </head>
@@ -1791,7 +1899,7 @@ export default LabKit
     <button data-focus="boite"><span class="num">03</span>Boîte de vitesses</button>
     <button data-focus="frein"><span class="num">04</span>Frein</button>
   </div>
-  <a class="bm-schema-link" href="transmission_schema.html">← Voir le Schéma &amp; Relations</a>
+  <a class="bm-schema-link" href="transmission_schema.html">← Schéma<span class="bm-full"> &amp; Relations</span></a>
 </div>
 
 <div class="bm-info" id="bm-info">
@@ -1881,6 +1989,14 @@ const VIEWS = {
   frein:        { az: 30,  el: 16, dist: 0.58, target: [ 0.65, CL,   0.00], fov: 28, frameX: -0.15 },
 }
 
+function adaptView(v) {
+  if (innerWidth > 820) return v
+  const asp = innerWidth / Math.max(1, innerHeight)
+  const distMul = asp < 1 ? clamp(1.12 / asp, 1.35, 2.35) : 1.15
+  // Center horizontally (frameX: 0) and push target slightly down so machine sits in upper half above drawer
+  return { ...v, dist: v.dist * distMul, frameX: 0, target: [v.target[0], v.target[1] - (asp < 1 ? 0.14 : 0.04), v.target[2]] }
+}
+
 const lab = new Lab({
   prompt: 'Chaîne de transmission mécanique : Accouplement, Embrayage, Boîte de vitesses, Frein',
   no: 1,
@@ -1889,11 +2005,13 @@ const lab = new Lab({
   size: 2.0,
   theme: 'paper',
   bg: 0xf4f5f8,
-  view: VIEWS.all,
+  view: adaptView(VIEWS.all),
   autoOrbit: false,
   // Cutaway opens the front-upper (+Z, +Y) quarter of casings down to below countershaft
   cut: { a: [0, 0, 1], b: [0, 1, 0], center: [0, 0.145, -0.002], reach: 0.45 },
 })
+// Cap mobile DPR slightly to stay silky-smooth & cool on phones
+if (innerWidth <= 820) lab.renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5))
 // Subtle studio bloom so polished gears keep razor-sharp tooth silhouettes without specular glare
 lab.bloom.strength = 0.10
 lab.bloom.threshold = 1.95
@@ -2653,6 +2771,18 @@ gearBoxUI.innerHTML = `
   </div>`
 lab.$('.lab-ctls').appendChild(gearBoxUI)
 
+// Mobile expandable drawer toggle for the 3 sliders
+const mobBtn = document.createElement('button')
+mobBtn.className = 'bm-mob-toggle on'
+mobBtn.type = 'button'
+mobBtn.textContent = '▲ Réglages (Moteur · Embrayage · Frein)'
+mobBtn.addEventListener('click', () => {
+  const side = lab.$('.lab-side')
+  const open = side.classList.toggle('mob-open')
+  mobBtn.textContent = open ? '▼ Masquer les réglages' : '▲ Réglages (Moteur · Embrayage · Frein)'
+})
+lab.$('.lab-ctls').appendChild(mobBtn)
+
 const slMotor  = lab.slider({ id: 'motor',  label: 'Vitesse moteur Nm', min: 0, max: 3000, value: 1500, step: 50, unit: 'tr/min', ends: ['Arrêt', '3 000'] })
 const slClutch = lab.slider({ id: 'clutch', label: 'Embrayage',          min: 0, max: 100,  value: 100,  step: 1,  unit: '%',      ends: ['Débrayé', 'Embrayé'] })
 const slBrake  = lab.slider({ id: 'brake',  label: 'Frein à disque',     min: 0, max: 100,  value: 0,    step: 1,  unit: '%',      ends: ['Relâché', 'Serré'] })
@@ -2720,9 +2850,11 @@ const ORGAN_CARDS = {
   },
 }
 
+let currentFocusKey = 'all'
 let camAnim = null
 function focusOrgan(key, autoCut = true) {
   if (!VIEWS[key]) key = 'all'
+  currentFocusKey = key
   document.querySelectorAll('.bm-focus button').forEach((b) => b.classList.toggle('act', b.dataset.focus === key))
   const c = ORGAN_CARDS[key]
   document.getElementById('bi-eyebrow').textContent = c.eyebrow
@@ -2736,8 +2868,8 @@ function focusOrgan(key, autoCut = true) {
     else if (key === 'all' || key === 'accouplement' || key === 'frein') lab.toggle('cut', false)
   }
 
-  // Smooth camera glide from current OrbitControls pose to target preset
-  const v = VIEWS[key]
+  // Smooth camera glide from current OrbitControls pose to target preset (mobile-adapted!)
+  const v = adaptView(VIEWS[key])
   const tEnd = new THREE.Vector3(...v.target).multiplyScalar(lab.k)
   const d = v.dist * 2.4
   const az = THREE.MathUtils.degToRad(v.az), el = THREE.MathUtils.degToRad(v.el)
@@ -2746,10 +2878,11 @@ function focusOrgan(key, autoCut = true) {
     t: 0, dur: 0.75,
     p0: lab.camera.position.clone(), p1: pEnd,
     t0: lab.controlsOrbit.target.clone(), t1: tEnd,
-    fx0: lab.view.frameX ?? -0.14, fx1: v.frameX,
+    fx0: lab.view.frameX ?? (innerWidth <= 820 ? 0 : -0.17), fx1: v.frameX,
   }
   lab.view = { ...lab.view, ...v }
 }
+addEventListener('orientationchange', () => setTimeout(() => focusOrgan(currentFocusKey, false), 150))
 
 document.querySelectorAll('.bm-focus button').forEach((b) => b.addEventListener('click', () => focusOrgan(b.dataset.focus)))
 document.getElementById('bi-toggle').addEventListener('click', () => {
@@ -3007,9 +3140,10 @@ lab._updateLabels = function () {
     items.push({ L, x, y })
   }
   items.sort((a, b) => a.x - b.x)
-  const minX = 86
-  const maxX = Math.max(minX + 420, W - Math.max(365, W * 0.28) - 70)
-  const minGap = 152
+  const isMob = W <= 820
+  const minX = isMob ? 56 : 86
+  const maxX = isMob ? (W - 56) : Math.max(minX + 420, W - Math.max(365, W * 0.28) - 70)
+  const minGap = isMob ? 72 : 152
   items.forEach((it, i) => {
     let lx = clamp(it.x, minX, maxX)
     if (i > 0 && lx - items[i - 1].lx < minGap) lx = items[i - 1].lx + minGap
@@ -3020,14 +3154,15 @@ lab._updateLabels = function () {
     items.forEach((it, i) => { it.lx = minX + (i / (items.length - 1)) * span })
   }
   // Place top-callout row cleanly below the info card bottom (left side) and high above the bench (right side)
-  const infoRect = document.getElementById('bm-info')?.getBoundingClientRect()
+  const infoEl = document.getElementById('bm-info')
+  const infoRect = (!isMob && infoEl && getComputedStyle(infoEl).display !== 'none') ? infoEl.getBoundingClientRect() : null
   const leftClearY = infoRect ? infoRect.bottom + 42 : 265
-  const topHighY = 128
+  const topHighY = isMob ? 98 : 128
   let lines = ''
   items.forEach((it, i) => {
     const { L, x, y, lx } = it
     const underInfo = infoRect && (lx - 75 < infoRect.right + 12)
-    const ly = underInfo ? (leftClearY + (i % 2) * 44) : (topHighY + (i % 2) * 52)
+    const ly = isMob ? (topHighY + (i % 3) * 40) : (underInfo ? (leftClearY + (i % 2) * 44) : (topHighY + (i % 2) * 52))
     L.el.className = 'lab-lab'
     L.el.style.transform = 'translate(-50%, -100%)'
     L.el.style.textAlign = 'center'
