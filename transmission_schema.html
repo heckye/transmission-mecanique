@@ -1,0 +1,1475 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chaîne de Transmission Mécanique — Schéma & Relations (Bac Technique)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/katex/katex.min.css">
+<script defer src="assets/katex/katex.min.js"></script>
+<script defer src="assets/katex/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+<style>
+  :root {
+    --paper: #f7f8fa;
+    --paper-card: #ffffff;
+    --paper-2: #edf0f5;
+    --ink: #1a2550;
+    --ink-soft: #3a466e;
+    --muted: #5b6485;
+    --soft: #6c7696;
+    --rule: rgba(26, 37, 80, 0.13);
+    --rule-solid: #c5cde0;
+    --pen: #1f3fa0;
+    --pen-tint: rgba(31, 63, 160, 0.07);
+    --accent: #bf3620;
+    --accent-tint: rgba(191, 54, 32, 0.08);
+    --green: #1e7a48;
+    --green-tint: rgba(30, 122, 72, 0.09);
+    --amber: #b45309;
+    --amber-tint: rgba(180, 83, 9, 0.09);
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'Geist', 'Atkinson Hyperlegible', system-ui, sans-serif;
+    --mono: 'Geist Mono', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.52;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Top navigation strip */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(247, 248, 250, 0.94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .topbar-in {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .brand-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--pen);
+    border: 1px solid rgba(31, 63, 160, 0.35);
+    border-radius: 3px;
+    padding: 2px 7px;
+  }
+  .brand-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: border-color .15s, background .15s, color .15s;
+  }
+  .nav-links a:hover {
+    border-color: var(--rule-solid);
+    background: var(--paper-card);
+    color: var(--ink);
+  }
+  .nav-links a.cta-3d {
+    background: var(--pen);
+    color: #fff;
+    border-color: var(--pen);
+    font-weight: 600;
+  }
+  .nav-links a.cta-3d:hover {
+    background: #163080;
+    color: #fff;
+  }
+
+  .wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+
+  /* Header */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: end;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 28px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 400;
+    line-height: 1.05;
+    margin: 0 0 10px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  h1 em {
+    color: var(--pen);
+    font-style: italic;
+  }
+  .lead {
+    max-width: 780px;
+    color: var(--ink-soft);
+    margin: 0;
+    font-size: 15.5px;
+  }
+  .hero-meta {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* Section headings */
+  section {
+    margin-bottom: 44px;
+  }
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .sec-head h2 {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    margin: 0;
+    color: var(--ink);
+  }
+  .sec-head .sec-note {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* Scenario selector bar */
+  .scenario-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .scenario-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-right: 4px;
+  }
+  .sc-btn {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    background: var(--paper-card);
+    border: 1px solid var(--rule-solid);
+    border-radius: 6px;
+    padding: 7px 13px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .sc-btn:hover {
+    border-color: var(--pen);
+    color: var(--ink);
+  }
+  .sc-btn.active {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+
+  /* Diagram frame */
+  .diagram-frame {
+    background: var(--paper-card);
+    border: 1px solid var(--rule-solid);
+    border-radius: 8px;
+    padding: 16px 16px 12px;
+    overflow-x: auto;
+  }
+  .diagram-frame svg {
+    display: block;
+    width: 100%;
+    min-width: 960px;
+    height: auto;
+  }
+
+  /* SVG interactive styling */
+  .node-grp { cursor: pointer; }
+  .node-grp .node-border { transition: stroke .2s, fill .2s, stroke-width .2s; }
+  .node-grp:hover .node-border { stroke: var(--pen) !important; stroke-width: 1.8 !important; }
+  .node-grp.selected .node-border { stroke: var(--pen) !important; stroke-width: 2.2 !important; }
+  .flow-line { transition: stroke .25s, stroke-width .25s, opacity .25s; }
+  .flow-active { stroke-dasharray: 8 5; animation: dashmove 0.9s linear infinite; }
+  .flow-reverse { stroke-dasharray: 8 5; animation: dashrev 0.9s linear infinite; }
+  @keyframes dashmove { to { stroke-dashoffset: -26; } }
+  @keyframes dashrev { to { stroke-dashoffset: 26; } }
+
+  /* Live scenario readout strip */
+  .telemetry {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: 1.6fr 2.4fr;
+    gap: 14px;
+  }
+  .card {
+    background: var(--paper-card);
+    border: 1px solid var(--rule-solid);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .tel-title {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--pen);
+    margin-bottom: 6px;
+  }
+  .tel-explain {
+    font-size: 14px;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+  .tel-rel {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0;
+    border-left: 2px solid var(--accent);
+    padding-left: 10px;
+  }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    align-items: stretch;
+  }
+  .kpi {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+  .kpi .k-lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .kpi .k-val {
+    font-family: var(--serif);
+    font-size: 26px;
+    line-height: 1.05;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .kpi .k-unit {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--soft);
+  }
+  .kpi.hi .k-val { color: var(--pen); }
+  .kpi.warn .k-val { color: var(--accent); }
+
+  /* Organ deep-dive inspector */
+  .organ-detail {
+    margin-top: 14px;
+    background: var(--paper-card);
+    border: 1px solid var(--rule-solid);
+    border-left: 3px solid var(--pen);
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 20px;
+  }
+  .organ-detail h3 {
+    margin: 0 0 6px;
+    font-size: 17px;
+    color: var(--ink);
+  }
+  .organ-detail p { margin: 0; font-size: 13.8px; color: var(--ink-soft); }
+  .organ-detail ul { margin: 4px 0 0; padding-left: 18px; font-size: 13.5px; color: var(--ink-soft); }
+  .organ-detail li { margin-bottom: 3px; }
+  .od-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  /* Normalized kinematic symbols grid */
+  .kin-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .kin-card {
+    background: var(--paper-card);
+    border: 1px solid var(--rule-solid);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .kin-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .kin-head h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .kin-badge {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--rule-solid);
+    color: var(--muted);
+  }
+  .kin-svg-wrap {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  .kin-svg-wrap svg { width: 100%; height: 112px; display: block; }
+  .kin-meta {
+    font-size: 12.8px;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+  }
+  .kin-link {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--pen);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .kin-link:hover { text-decoration: underline; }
+
+  /* Comparison table */
+  .tbl-wrap {
+    background: var(--paper-card);
+    border: 1px solid var(--rule-solid);
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    background: var(--paper);
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--rule-solid);
+  }
+  td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    color: var(--ink-soft);
+  }
+  tr:last-child td { border-bottom: none; }
+  td strong { color: var(--ink); font-weight: 600; }
+  .pill-t {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: var(--pen-tint);
+    color: var(--pen);
+    margin-right: 4px;
+    margin-bottom: 3px;
+  }
+  .pill-a {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: var(--accent-tint);
+    color: var(--accent);
+  }
+
+  /* Formulas + mini solver */
+  .formula-grid {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 16px;
+  }
+  .f-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .f-box {
+    background: var(--paper-card);
+    border: 1px solid var(--rule-solid);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .f-box .f-cat {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--pen);
+    margin-bottom: 6px;
+  }
+  .f-box .f-eq {
+    font-size: 15px;
+    margin: 6px 0 8px;
+    color: var(--ink);
+  }
+  .f-box .f-desc {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* Mini calculator matching 3D lab */
+  .calc-box {
+    background: var(--paper-card);
+    border: 1px solid var(--rule-solid);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .calc-box h3 {
+    font-family: var(--serif);
+    font-size: 23px;
+    font-weight: 400;
+    margin: 0 0 4px;
+  }
+  .calc-sub {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin: 0 0 14px;
+  }
+  .calc-row {
+    margin-bottom: 12px;
+  }
+  .calc-row label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+  .calc-row label b {
+    font-family: var(--mono);
+    color: var(--ink);
+  }
+  .calc-row input[type=range] {
+    width: 100%;
+    accent-color: var(--pen);
+  }
+  .gear-pills {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .g-btn {
+    flex: 1;
+    padding: 7px 0;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid var(--rule-solid);
+    background: var(--paper);
+    color: var(--ink-soft);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .g-btn.active {
+    background: var(--pen);
+    color: #fff;
+    border-color: var(--pen);
+  }
+  .calc-out {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 11px 13px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.75;
+    color: var(--ink);
+  }
+  .calc-out .hi { color: var(--pen); font-weight: 600; }
+  .calc-out .neg { color: var(--accent); font-weight: 600; }
+
+  .footer-cta {
+    margin-top: 24px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 8px;
+    padding: 22px 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .footer-cta h3 {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    margin: 0 0 4px;
+  }
+  .footer-cta p {
+    margin: 0;
+    font-size: 14px;
+    color: rgba(255,255,255,0.78);
+  }
+  .footer-cta a {
+    background: #fff;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 18px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  .footer-cta a:hover { background: #e8edf8; }
+
+  @media (max-width: 980px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-meta { text-align: left; }
+    .telemetry, .organ-detail, .formula-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .kin-grid { grid-template-columns: repeat(2, 1fr); }
+    .f-list { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <span class="brand-tag">Génie Mécanique · Bac Tech</span>
+      <span class="brand-name">Révision Yassmine — Transmission de puissance</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#schema-principal">Schéma & Relations</a>
+      <a href="#symboles">Schémas cinématiques</a>
+      <a href="#comparatif">Types d'organes</a>
+      <a href="#formulaire">Formulaire</a>
+      <a class="cta-3d" href="transmission_3d_lab.html">Ouvrir le Banc 3D Interactif →</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Programme Baccalauréat Technique · Transmission sans et avec modification de vitesse</div>
+      <h1>Les 4 organes clés de la <em>chaîne de transmission</em></h1>
+      <p class="lead">
+        Comment l'<strong>Accouplement</strong>, l'<strong>Embrayage</strong>, la <strong>Boîte de vitesses</strong> et le <strong>Frein</strong> s'enchaînent et se coordonnent du moteur jusqu'au récepteur. Clique sur un scénario de fonctionnement ou sur n'importe quel organe du schéma pour visualiser le flux de puissance et leurs interactions mécaniques.
+      </p>
+    </div>
+    <div class="hero-meta">
+      <div>MOTEUR NOMINAL : 1 500 tr/min · 40 N·m</div>
+      <div>RENDEMENT BOÎTE : η = 0,94 (0,98 en 3ᵉ)</div>
+      <div>RAPPORTS : 1ʳᵉ · 2ᵉ · 3ᵉ (1:1) · MA</div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: MASTER INTERACTIVE SCHEMA -->
+  <section id="schema-principal">
+    <div class="sec-head">
+      <h2>1. Schéma fonctionnel & relations entre les organes</h2>
+      <span class="sec-note">Clique un scénario ou un organe · Flux de puissance & pilotage</span>
+    </div>
+
+    <div class="scenario-bar" role="group" aria-label="Scénarios de fonctionnement">
+      <span class="scenario-label">Scénario :</span>
+      <button class="sc-btn active" data-sc="start">1. Démarrage (1ʳᵉ)</button>
+      <button class="sc-btn" data-sc="shift">2. Passage de vitesse (Débrayé)</button>
+      <button class="sc-btn" data-sc="cruise2">3. Croisière (2ᵉ)</button>
+      <button class="sc-btn" data-sc="direct3">4. Prise directe (3ᵉ)</button>
+      <button class="sc-btn" data-sc="reverse">5. Marche Arrière (MA)</button>
+      <button class="sc-btn" data-sc="brake">6. Freinage d'arrêt</button>
+    </div>
+
+    <div class="diagram-frame">
+      <svg id="chain-svg" viewBox="0 0 1240 500" role="img" aria-labelledby="chain-schema-title chain-schema-desc" xmlns="http://www.w3.org/2000/svg">
+        <title id="chain-schema-title">Chaîne de transmission mécanique et relations entre Accouplement, Embrayage, Boîte de vitesses et Frein</title>
+        <desc id="chain-schema-desc">Schéma fonctionnel reliant le moteur, l'accouplement élastique, l'embrayage monodisque, la boîte de vitesses à engrenages, le frein à disque et le récepteur, avec les commandes de pilotage en haut et les relations de coordination mécanique en bas.</desc>
+
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#5b6485"/>
+          </marker>
+          <marker id="arrow-pen" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#1f3fa0"/>
+          </marker>
+          <marker id="arrow-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#1e7a48"/>
+          </marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#bf3620"/>
+          </marker>
+          <marker id="arrow-amber" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#b45309"/>
+          </marker>
+          <marker id="arrow-start-pen" markerWidth="8" markerHeight="6" refX="1" refY="3" orient="auto">
+            <polygon points="8 0, 0 3, 8 6" fill="#1f3fa0"/>
+          </marker>
+          <marker id="arrow-start-accent" markerWidth="8" markerHeight="6" refX="1" refY="3" orient="auto">
+            <polygon points="8 0, 0 3, 8 6" fill="#bf3620"/>
+          </marker>
+        </defs>
+
+        <!-- Clean academic paper background -->
+        <rect width="1240" height="500" fill="#ffffff"/>
+
+        <!-- Subtle functional zones (painted FIRST behind everything) -->
+        <rect x="200" y="160" width="400" height="168" rx="6" fill="rgba(31,63,160,0.035)" stroke="rgba(31,63,160,0.16)" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="212" y="176" fill="#1f3fa0" font-size="8" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em">SANS MODIFICATION DE VITESSE (r = 1)</text>
+
+        <rect x="632" y="160" width="200" height="168" rx="6" fill="rgba(180,83,9,0.04)" stroke="rgba(180,83,9,0.22)" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="644" y="176" fill="#b45309" font-size="8" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em">MODIF. VITESSE (r ≠ 1)</text>
+
+        <rect x="864" y="160" width="180" height="168" rx="6" fill="rgba(191,54,32,0.04)" stroke="rgba(191,54,32,0.22)" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="876" y="176" fill="#bf3620" font-size="8" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em">DISSIPATION / ARRÊT</text>
+
+        <!-- ================================================================
+             CONNECTORS (drawn BEFORE node boxes, all orthogonal with r=8!)
+             ================================================================ -->
+
+        <!-- 1. UPPER COMMAND BUS (3 orthogonal paths from Pilotage bottom y=92) -->
+        <!-- Cmd 1: Pilotage (508,92) -> straight vertical down to Embrayage (508,184) -->
+        <line id="cmd-clutch" x1="508" y1="92" x2="508" y2="180" stroke="#5b6485" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+        <rect x="412" y="128" width="88" height="16" rx="2" fill="#ffffff"/>
+        <text x="456" y="139" fill="#5b6485" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">CMD EMBRAYAGE</text>
+
+        <!-- Cmd 2: Pilotage (640,92) -> down y=136 -> right x=796 -> down Boîte (796,184) (clear of zone header!) -->
+        <path id="cmd-gearbox" d="M 640 92 L 640 128 A 8 8 0 0 0 648 136 L 788 136 A 8 8 0 0 1 796 144 L 796 180" fill="none" stroke="#5b6485" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+        <rect x="678" y="114" width="76" height="14" rx="2" fill="#ffffff"/>
+        <text x="716" y="124" fill="#5b6485" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">SÉLECTEUR</text>
+
+        <!-- Cmd 3: Pilotage (740,92) -> down y=112 -> right x=1004 -> down Frein (1004,184) (clear of zone header!) -->
+        <path id="cmd-brake" d="M 740 92 L 740 104 A 8 8 0 0 0 748 112 L 996 112 A 8 8 0 0 1 1004 120 L 1004 180" fill="none" stroke="#5b6485" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+        <rect x="832" y="90" width="88" height="14" rx="2" fill="#ffffff"/>
+        <text x="876" y="100" fill="#5b6485" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">CMD FREINAGE</text>
+
+        <!-- 2. MAIN HORIZONTAL POWER FLOW SHAFTS (y = 250) -->
+        <!-- Shaft 1: Moteur -> Accouplement (156..212) -->
+        <line id="flow-1" class="flow-line flow-active" x1="156" y1="250" x2="208" y2="250" stroke="#1e7a48" stroke-width="2.6" marker-end="url(#arrow-green)"/>
+        <rect x="160" y="224" width="48" height="14" rx="2" fill="#ffffff"/>
+        <text id="lbl-f1" x="184" y="234" fill="#1e7a48" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.04em">Nm, Cm</text>
+
+        <!-- Shaft 2: Accouplement -> Embrayage (372..428) -->
+        <line id="flow-2" class="flow-line flow-active" x1="372" y1="250" x2="424" y2="250" stroke="#1e7a48" stroke-width="2.6" marker-end="url(#arrow-green)"/>
+        <rect x="374" y="224" width="52" height="14" rx="2" fill="#ffffff"/>
+        <text id="lbl-f2" x="400" y="234" fill="#1e7a48" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.04em">N1 = Nm</text>
+
+        <!-- Shaft 3: Embrayage -> Boîte (588..644) -->
+        <line id="flow-3" class="flow-line flow-active" x1="588" y1="250" x2="640" y2="250" stroke="#1e7a48" stroke-width="2.6" marker-end="url(#arrow-green)"/>
+        <rect x="592" y="224" width="48" height="14" rx="2" fill="#ffffff"/>
+        <text id="lbl-f3" x="616" y="234" fill="#1e7a48" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.04em">Ne, Ce</text>
+
+        <!-- Shaft 4: Boîte -> Frein (820..876) -->
+        <line id="flow-4" class="flow-line flow-active" x1="820" y1="250" x2="872" y2="250" stroke="#1f3fa0" stroke-width="2.6" marker-end="url(#arrow-pen)"/>
+        <rect x="822" y="224" width="52" height="14" rx="2" fill="#ffffff"/>
+        <text id="lbl-f4" x="848" y="234" fill="#1f3fa0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.04em">Ns = r·Ne</text>
+
+        <!-- Shaft 5: Frein -> Récepteur (1032..1088) -->
+        <line id="flow-5" class="flow-line flow-active" x1="1032" y1="250" x2="1084" y2="250" stroke="#1f3fa0" stroke-width="2.6" marker-end="url(#arrow-pen)"/>
+        <rect x="1034" y="224" width="52" height="14" rx="2" fill="#ffffff"/>
+        <text id="lbl-f5" x="1060" y="234" fill="#1f3fa0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.04em">Cs, Ns</text>
+
+        <!-- 3. LOWER INTER-ORGAN RELATIONS (orthogonal U-buses at y=356 and y=412, ZERO crossings!) -->
+        <!-- Rel 1: Accouplement (324,316) <-> Embrayage (468,316) at y=356 -->
+        <path id="rel-acc-emb" d="M 324 320 L 324 348 A 8 8 0 0 0 332 356 L 460 356 A 8 8 0 0 0 468 348 L 468 320" fill="none" stroke="#5b6485" stroke-width="1.3" marker-start="url(#arrow-start-pen)" marker-end="url(#arrow-pen)"/>
+        <rect x="336" y="364" width="120" height="14" rx="2" fill="#ffffff"/>
+        <text x="396" y="374" fill="#5b6485" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.05em">PERMANENT / TEMPORAIRE</text>
+
+        <!-- Rel 2: Embrayage (548,316) -> Boîte (692,316) at y=356 -->
+        <path id="rel-emb-bv" d="M 548 320 L 548 348 A 8 8 0 0 0 556 356 L 684 356 A 8 8 0 0 0 692 348 L 692 320" fill="none" stroke="#1f3fa0" stroke-width="1.5" marker-start="url(#arrow-start-pen)" marker-end="url(#arrow-pen)"/>
+        <rect x="556" y="364" width="128" height="14" rx="2" fill="#ffffff"/>
+        <text x="620" y="374" fill="#1f3fa0" font-size="8" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle" letter-spacing="0.05em">COUPER COUPLE → PASSER</text>
+
+        <!-- Rel 3: Embrayage (508,316) <-> Frein (954,316) at y=412 (clear underneath!) -->
+        <path id="rel-emb-fr" d="M 508 320 L 508 404 A 8 8 0 0 0 516 412 L 946 412 A 8 8 0 0 0 954 404 L 954 320" fill="none" stroke="#bf3620" stroke-width="1.5" stroke-dasharray="5 4" marker-start="url(#arrow-start-accent)" marker-end="url(#arrow-accent)"/>
+        <rect x="596" y="420" width="272" height="14" rx="2" fill="#ffffff"/>
+        <text x="732" y="430" fill="#bf3620" font-size="8" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle" letter-spacing="0.05em">ANTAGONISME : DÉBRAYER PENDANT FREINAGE</text>
+
+        <!-- ================================================================
+             NODE BOXES (drawn AFTER connectors, with opaque paper masks!)
+             ================================================================ -->
+
+        <!-- Pilotage Node (top) -->
+        <g id="node-pilot" class="node-grp" data-organ="pilot">
+          <rect x="460" y="36" width="320" height="56" rx="6" fill="#ffffff"/>
+          <rect class="node-border" x="460" y="36" width="320" height="56" rx="6" fill="#f7f8fa" stroke="#5b6485" stroke-width="1.1"/>
+          <rect x="470" y="42" width="60" height="13" rx="2" fill="transparent" stroke="rgba(91,100,133,0.45)" stroke-width="0.8"/>
+          <text x="500" y="51" fill="#5b6485" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.1em">COMMANDE</text>
+          <text x="620" y="65" fill="#1a2550" font-size="12.5" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Pilotage &amp; Coordination des Organes</text>
+          <text x="620" y="81" fill="#5b6485" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Pédale / Levier / Vérin · Séquence de sécurité</text>
+        </g>
+
+        <!-- Source: Moteur -->
+        <g id="node-moteur" class="node-grp" data-organ="moteur">
+          <rect x="24" y="196" width="132" height="108" rx="6" fill="#ffffff"/>
+          <rect class="node-border" x="24" y="196" width="132" height="108" rx="6" fill="#f7f8fa" stroke="#5b6485" stroke-width="1.2"/>
+          <rect x="34" y="204" width="44" height="13" rx="2" fill="transparent" stroke="rgba(91,100,133,0.45)" stroke-width="0.8"/>
+          <text x="56" y="213" fill="#5b6485" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">SOURCE</text>
+          <text x="90" y="242" fill="#1a2550" font-size="13" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Moteur</text>
+          <text x="90" y="258" fill="#5b6485" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Pm = Cm · ωm</text>
+          <rect x="38" y="274" width="104" height="20" rx="3" fill="rgba(30,122,72,0.1)"/>
+          <text id="badge-moteur" x="90" y="287" fill="#1e7a48" font-size="8.5" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">1 500 tr/min</text>
+        </g>
+
+        <!-- Organ 1: Accouplement -->
+        <g id="node-acc" class="node-grp" data-organ="accouplement">
+          <rect x="212" y="184" width="160" height="132" rx="6" fill="#ffffff"/>
+          <rect class="node-border" x="212" y="184" width="160" height="132" rx="6" fill="#ffffff" stroke="#1a2550" stroke-width="1.3"/>
+          <rect x="222" y="192" width="66" height="13" rx="2" fill="transparent" stroke="rgba(26,37,80,0.4)" stroke-width="0.8"/>
+          <text x="255" y="201" fill="#1a2550" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">01 PERMANENT</text>
+          <text x="292" y="232" fill="#1a2550" font-size="13.5" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Accouplement</text>
+          <text x="292" y="248" fill="#5b6485" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Élastique à broches</text>
+          <text x="292" y="264" fill="#6c7696" font-size="8.5" font-family="'Geist', sans-serif" text-anchor="middle">Relie 2 arbres coaxiaux</text>
+          <text x="292" y="276" fill="#6c7696" font-size="8.5" font-family="'Geist', sans-serif" text-anchor="middle">Amortit chocs &amp; défauts</text>
+          <rect x="226" y="288" width="132" height="20" rx="3" fill="rgba(30,122,72,0.1)"/>
+          <text id="badge-acc" x="292" y="301" fill="#1e7a48" font-size="8.5" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">LIÉ · r = 1</text>
+        </g>
+
+        <!-- Organ 2: Embrayage (Focal 1) -->
+        <g id="node-emb" class="node-grp selected" data-organ="embrayage">
+          <rect x="428" y="184" width="160" height="132" rx="6" fill="#ffffff"/>
+          <rect class="node-border" x="428" y="184" width="160" height="132" rx="6" fill="rgba(31,63,160,0.05)" stroke="#1f3fa0" stroke-width="1.6"/>
+          <rect x="438" y="192" width="70" height="13" rx="2" fill="transparent" stroke="rgba(31,63,160,0.45)" stroke-width="0.8"/>
+          <text x="473" y="201" fill="#1f3fa0" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">02 TEMPORAIRE</text>
+          <text x="508" y="232" fill="#1a2550" font-size="13.5" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Embrayage</text>
+          <text x="508" y="248" fill="#1f3fa0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Monodisque à friction</text>
+          <text x="508" y="264" fill="#6c7696" font-size="8.5" font-family="'Geist', sans-serif" text-anchor="middle">Accouple / sépare en marche</text>
+          <text x="508" y="276" fill="#6c7696" font-size="8.5" font-family="'Geist', sans-serif" text-anchor="middle">Cf = n · f · F · Rmoy</text>
+          <rect id="badge-emb-bg" x="442" y="288" width="132" height="20" rx="3" fill="rgba(180,83,9,0.12)"/>
+          <text id="badge-emb" x="508" y="301" fill="#b45309" font-size="8.5" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">PROGRESSIF (70%)</text>
+        </g>
+
+        <!-- Organ 3: Boîte de vitesses (Focal 2) -->
+        <g id="node-bv" class="node-grp" data-organ="boite">
+          <rect x="644" y="184" width="176" height="132" rx="6" fill="#ffffff"/>
+          <rect class="node-border" x="644" y="184" width="176" height="132" rx="6" fill="#ffffff" stroke="#1a2550" stroke-width="1.3"/>
+          <rect x="654" y="192" width="76" height="13" rx="2" fill="transparent" stroke="rgba(180,83,9,0.5)" stroke-width="0.8"/>
+          <text x="692" y="201" fill="#b45309" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">03 ADAPTATEUR</text>
+          <text x="732" y="232" fill="#1a2550" font-size="13.5" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Boîte de vitesses</text>
+          <text x="732" y="248" fill="#5b6485" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">3 rapports + MA (baladeurs)</text>
+          <text x="732" y="264" fill="#6c7696" font-size="8.5" font-family="'Geist', sans-serif" text-anchor="middle">Adapte couple Cs &amp; vitesse Ns</text>
+          <text x="732" y="276" fill="#6c7696" font-size="8.5" font-family="'Geist', sans-serif" text-anchor="middle">r = (-1)ᵏ · ΠZmen / ΠZmenées</text>
+          <rect id="badge-bv-bg" x="660" y="288" width="144" height="20" rx="3" fill="rgba(31,63,160,0.1)"/>
+          <text id="badge-bv" x="732" y="301" fill="#1f3fa0" font-size="8.5" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">1ʳᵉ · r = +0,259</text>
+        </g>
+
+        <!-- Organ 4: Frein -->
+        <g id="node-frein" class="node-grp" data-organ="frein">
+          <rect x="876" y="184" width="156" height="132" rx="6" fill="#ffffff"/>
+          <rect class="node-border" x="876" y="184" width="156" height="132" rx="6" fill="rgba(191,54,32,0.05)" stroke="#bf3620" stroke-width="1.5"/>
+          <rect x="886" y="192" width="64" height="13" rx="2" fill="transparent" stroke="rgba(191,54,32,0.5)" stroke-width="0.8"/>
+          <text x="918" y="201" fill="#bf3620" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">04 SÉCURITÉ</text>
+          <text x="954" y="232" fill="#1a2550" font-size="13.5" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Frein</text>
+          <text x="954" y="248" fill="#bf3620" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Disque ventilé &amp; étrier</text>
+          <text x="954" y="264" fill="#6c7696" font-size="8.5" font-family="'Geist', sans-serif" text-anchor="middle">Ralentit ou immobilise l'arbre</text>
+          <text x="954" y="276" fill="#6c7696" font-size="8.5" font-family="'Geist', sans-serif" text-anchor="middle">Énergie cinétique → Chaleur</text>
+          <rect id="badge-fr-bg" x="890" y="288" width="128" height="20" rx="3" fill="rgba(91,100,133,0.1)"/>
+          <text id="badge-fr" x="954" y="301" fill="#5b6485" font-size="8.5" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">RELÂCHÉ (0%)</text>
+        </g>
+
+        <!-- Output: Récepteur -->
+        <g id="node-rec" class="node-grp" data-organ="recepteur">
+          <rect x="1088" y="196" width="128" height="108" rx="6" fill="#ffffff"/>
+          <rect class="node-border" x="1088" y="196" width="128" height="108" rx="6" fill="#f7f8fa" stroke="#5b6485" stroke-width="1.2"/>
+          <rect x="1098" y="204" width="52" height="13" rx="2" fill="transparent" stroke="rgba(91,100,133,0.45)" stroke-width="0.8"/>
+          <text x="1124" y="213" fill="#5b6485" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">CHARGE</text>
+          <text x="1152" y="242" fill="#1a2550" font-size="13" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Récepteur</text>
+          <text x="1152" y="258" fill="#5b6485" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Roues / Broche</text>
+          <rect id="badge-rec-bg" x="1100" y="274" width="104" height="20" rx="3" fill="rgba(31,63,160,0.1)"/>
+          <text id="badge-rec" x="1152" y="287" fill="#1f3fa0" font-size="8.5" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="middle">388 tr/min</text>
+        </g>
+
+        <!-- ================================================================
+             LEGEND STRIP (outside diagram area, separated by hairline rule)
+             ================================================================ -->
+        <line x1="24" y1="456" x2="1216" y2="456" stroke="rgba(26,37,80,0.12)" stroke-width="1"/>
+        <text x="24" y="478" fill="#5b6485" font-size="8.5" font-family="'Geist Mono', monospace" font-weight="600" letter-spacing="0.14em">LÉGENDE</text>
+
+        <line x1="116" y1="475" x2="148" y2="475" stroke="#1e7a48" stroke-width="2.4"/>
+        <text x="156" y="478" fill="#1a2550" font-size="9" font-family="'Geist', sans-serif">Flux amont (vitesse moteur Nm)</text>
+
+        <line x1="348" y1="475" x2="380" y2="475" stroke="#1f3fa0" stroke-width="2.4"/>
+        <text x="388" y="478" fill="#1a2550" font-size="9" font-family="'Geist', sans-serif">Flux adapté (Ns = r · Ne)</text>
+
+        <line x1="544" y1="475" x2="576" y2="475" stroke="#5b6485" stroke-width="1.4" stroke-dasharray="5 4"/>
+        <text x="584" y="478" fill="#1a2550" font-size="9" font-family="'Geist', sans-serif">Ligne de commande / arbre libre</text>
+
+        <line x1="772" y1="475" x2="804" y2="475" stroke="#bf3620" stroke-width="1.6" stroke-dasharray="5 4"/>
+        <text x="812" y="478" fill="#1a2550" font-size="9" font-family="'Geist', sans-serif">Coordination Embrayage ↔ Frein</text>
+
+        <line x1="1020" y1="475" x2="1052" y2="475" stroke="#b45309" stroke-width="2.4"/>
+        <text x="1060" y="478" fill="#1a2550" font-size="9" font-family="'Geist', sans-serif">Inversion de sens (MA)</text>
+      </svg>
+    </div>
+
+    <!-- Live Scenario Telemetry -->
+    <div class="telemetry">
+      <div class="card">
+        <div class="tel-title" id="sc-title">SCÉNARIO 1 · DÉMARRAGE PROGRESSIF EN 1ʳᵉ</div>
+        <p class="tel-explain" id="sc-explain"></p>
+        <p class="tel-rel" id="sc-rel"></p>
+      </div>
+      <div class="card">
+        <div class="tel-title">GRANDEURS CINÉMATIQUES &amp; DYNAMIQUES CALCULÉES (MOTEUR 1 500 tr/min · 40 N·m)</div>
+        <div class="kpi-grid">
+          <div class="kpi"><div class="k-lbl">Entrée Boîte Ne</div><div class="k-val" id="k-ne">1 500</div><div class="k-unit">tr/min</div></div>
+          <div class="kpi hi"><div class="k-lbl">Rapport r</div><div class="k-val" id="k-r">+0,259</div><div class="k-unit">Ns / Ne</div></div>
+          <div class="kpi hi"><div class="k-lbl">Sortie Ns</div><div class="k-val" id="k-ns">388</div><div class="k-unit">tr/min</div></div>
+          <div class="kpi"><div class="k-lbl">Couple sortie Cs</div><div class="k-val" id="k-cs">145</div><div class="k-unit">N·m</div></div>
+          <div class="kpi"><div class="k-lbl">Puissance Ps</div><div class="k-val" id="k-ps">5,90</div><div class="k-unit">kW</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Selected Organ Inspector -->
+    <div class="organ-detail" id="organ-detail">
+      <div>
+        <div class="od-tag" id="od-tag">ORGANE SÉLECTIONNÉ · CLIQUE UN BLOC DU SCHÉMA</div>
+        <h3 id="od-name">02. Embrayage monodisque à friction</h3>
+        <p id="od-role"></p>
+      </div>
+      <div>
+        <div class="od-tag">CONSTITUTION (PIÈCES CLÉS 3D)</div>
+        <ul id="od-parts"></ul>
+      </div>
+      <div>
+        <div class="od-tag">RELATIONS AVEC LES AUTRES ORGANES</div>
+        <ul id="od-links"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: NORMALIZED KINEMATIC SYMBOLS (BAC TECHNIQUE) -->
+  <section id="symboles">
+    <div class="sec-head">
+      <h2>2. Schémas cinématiques normalisés (ISO / NF — Bac Technique)</h2>
+      <span class="sec-note">À savoir reconnaître et tracer en devoir &amp; examen</span>
+    </div>
+
+    <div class="kin-grid">
+      <!-- Accouplement -->
+      <div class="kin-card">
+        <div>
+          <div class="kin-head">
+            <h3>1. Accouplement</h3>
+            <span class="kin-badge">Permanent</span>
+          </div>
+          <div class="kin-svg-wrap">
+            <svg viewBox="0 0 240 112" role="img" aria-labelledby="kin-acc-title kin-acc-desc">
+              <title id="kin-acc-title">Symbole cinématique d'un accouplement élastique</title>
+              <desc id="kin-acc-desc">Deux arbres coaxiaux reliés en permanence par deux plateaux et deux éléments élastiques.</desc>
+              <line x1="20" y1="56" x2="100" y2="56" stroke="#1a2550" stroke-width="2.5"/>
+              <line x1="140" y1="56" x2="220" y2="56" stroke="#1a2550" stroke-width="2.5"/>
+              <!-- Plateau menant -->
+              <line x1="100" y1="26" x2="100" y2="86" stroke="#1f3fa0" stroke-width="3"/>
+              <!-- Plateau mené -->
+              <line x1="140" y1="26" x2="140" y2="86" stroke="#1f3fa0" stroke-width="3"/>
+              <!-- Broches + manchons élastiques (symboles normalisés) -->
+              <rect x="108" y="30" width="24" height="12" rx="2" fill="rgba(180,83,9,0.2)" stroke="#b45309" stroke-width="1.6"/>
+              <rect x="108" y="70" width="24" height="12" rx="2" fill="rgba(180,83,9,0.2)" stroke="#b45309" stroke-width="1.6"/>
+              <line x1="100" y1="36" x2="140" y2="36" stroke="#1a2550" stroke-width="1.5"/>
+              <line x1="100" y1="76" x2="140" y2="76" stroke="#1a2550" stroke-width="1.5"/>
+              <!-- Labels -->
+              <text x="52" y="46" fill="#5b6485" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Arbre 1</text>
+              <text x="188" y="46" fill="#5b6485" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Arbre 2</text>
+              <text x="120" y="102" fill="#b45309" font-size="8.5" font-family="'Geist Mono', monospace" text-anchor="middle">Éléments élastiques</text>
+            </svg>
+          </div>
+          <p class="kin-meta">Transmet en permanence le couple entre deux arbres en prolongement. L'élément élastique compense de légers désalignements et amortit les à-coups.</p>
+        </div>
+        <a class="kin-link" href="transmission_3d_lab.html#accouplement">Inspecter en 3D →</a>
+      </div>
+
+      <!-- Embrayage -->
+      <div class="kin-card">
+        <div>
+          <div class="kin-head">
+            <h3>2. Embrayage</h3>
+            <span class="kin-badge">Temporaire</span>
+          </div>
+          <div class="kin-svg-wrap">
+            <svg viewBox="0 0 240 112" role="img" aria-labelledby="kin-emb-title kin-emb-desc">
+              <title id="kin-emb-title">Symbole cinématique d'un embrayage à friction</title>
+              <desc id="kin-emb-desc">Volant moteur entraînant un disque de friction coulissant sur cannelures sous un effort presseur F.</desc>
+              <!-- Arbre moteur -->
+              <line x1="20" y1="56" x2="96" y2="56" stroke="#1a2550" stroke-width="2.5"/>
+              <line x1="96" y1="22" x2="96" y2="90" stroke="#1a2550" stroke-width="3"/>
+              <!-- Disque de friction mobile (liaison glissière sur arbre récepteur) -->
+              <rect x="104" y="26" width="10" height="60" fill="rgba(180,83,9,0.22)" stroke="#b45309" stroke-width="1.8"/>
+              <!-- Cannelures (glissière) -->
+              <rect x="114" y="48" width="26" height="16" fill="#ffffff" stroke="#1f3fa0" stroke-width="1.8"/>
+              <line x1="114" y1="56" x2="220" y2="56" stroke="#1a2550" stroke-width="2.5"/>
+              <!-- Effort presseur F -->
+              <line x1="158" y1="36" x2="122" y2="36" stroke="#bf3620" stroke-width="1.8"/>
+              <polygon points="118 36, 126 32, 126 40" fill="#bf3620"/>
+              <text x="148" y="29" fill="#bf3620" font-size="9" font-family="'Geist Mono', monospace" font-weight="600">F (Cmd)</text>
+              <text x="56" y="46" fill="#5b6485" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Volant</text>
+              <text x="186" y="46" fill="#5b6485" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Primaire</text>
+              <text x="120" y="104" fill="#1f3fa0" font-size="8.5" font-family="'Geist Mono', monospace" text-anchor="middle">Garnitures + glissière</text>
+            </svg>
+          </div>
+          <p class="kin-meta">Permet d'accoupler ou de séparer <em>en marche</em> l'arbre moteur et l'arbre récepteur. Le glissement initial garantit un démarrage progressif sans caler.</p>
+        </div>
+        <a class="kin-link" href="transmission_3d_lab.html#embrayage">Inspecter en 3D →</a>
+      </div>
+
+      <!-- Boîte de vitesses -->
+      <div class="kin-card">
+        <div>
+          <div class="kin-head">
+            <h3>3. Boîte de vitesses</h3>
+            <span class="kin-badge">Engrenages</span>
+          </div>
+          <div class="kin-svg-wrap">
+            <svg viewBox="0 0 240 112" role="img" aria-labelledby="kin-bv-title kin-bv-desc">
+              <title id="kin-bv-title">Symbole cinématique d'une boîte de vitesses à arbres parallèles</title>
+              <desc id="kin-bv-desc">Arbre primaire et arbre secondaire coaxiaux couplés via un arbre intermédiaire, trois trains d'engrenages et un baladeur.</desc>
+              <!-- Arbre primaire / secondaire (coaxiaux en haut) -->
+              <line x1="16" y1="34" x2="94" y2="34" stroke="#1a2550" stroke-width="2.3"/>
+              <line x1="108" y1="34" x2="224" y2="34" stroke="#1a2550" stroke-width="2.3"/>
+              <!-- Arbre intermédiaire (en bas) -->
+              <line x1="48" y1="84" x2="192" y2="84" stroke="#5b6485" stroke-width="2.3"/>
+              <!-- Train fixe Z1 / Z2 -->
+              <line x1="68" y1="16" x2="68" y2="52" stroke="#1f3fa0" stroke-width="2.6"/>
+              <line x1="64" y1="16" x2="72" y2="16" stroke="#1f3fa0" stroke-width="1.8"/>
+              <line x1="64" y1="52" x2="72" y2="52" stroke="#1f3fa0" stroke-width="1.8"/>
+              <line x1="68" y1="54" x2="68" y2="100" stroke="#1f3fa0" stroke-width="2.6"/>
+              <!-- Train 2e Z5 / Z6 -->
+              <line x1="132" y1="14" x2="132" y2="54" stroke="#b45309" stroke-width="2.6"/>
+              <line x1="132" y1="56" x2="132" y2="98" stroke="#b45309" stroke-width="2.6"/>
+              <!-- Train 1re Z3 / Z4 -->
+              <line x1="174" y1="12" x2="174" y2="58" stroke="#1e7a48" stroke-width="2.6"/>
+              <line x1="174" y1="60" x2="174" y2="96" stroke="#1e7a48" stroke-width="2.6"/>
+              <!-- Baladeur / crabot -->
+              <rect x="94" y="27" width="18" height="14" fill="rgba(31,63,160,0.16)" stroke="#1f3fa0" stroke-width="1.5"/>
+              <text x="68" y="109" fill="#5b6485" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">Z1/Z2</text>
+              <text x="132" y="109" fill="#b45309" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">2ᵉ</text>
+              <text x="174" y="109" fill="#1e7a48" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">1ʳᵉ</text>
+            </svg>
+          </div>
+          <p class="kin-meta">Trains d'engrenages cylindriques + baladeurs coulissants sur cannelures. Multiplie le couple au démarrage (1ʳᵉ) ou passe en prise directe (3ᵉ) ou MA.</p>
+        </div>
+        <a class="kin-link" href="transmission_3d_lab.html#boite">Inspecter en 3D →</a>
+      </div>
+
+      <!-- Frein -->
+      <div class="kin-card">
+        <div>
+          <div class="kin-head">
+            <h3>4. Frein</h3>
+            <span class="kin-badge">Arrêt</span>
+          </div>
+          <div class="kin-svg-wrap">
+            <svg viewBox="0 0 240 112" role="img" aria-labelledby="kin-fr-title kin-fr-desc">
+              <title id="kin-fr-title">Symbole cinématique d'un frein à disque</title>
+              <desc id="kin-fr-desc">Disque solidaire de l'arbre pincé par deux plaquettes liées au bâti fixe sous l'effort F.</desc>
+              <!-- Arbre récepteur -->
+              <line x1="20" y1="56" x2="220" y2="56" stroke="#1a2550" stroke-width="2.5"/>
+              <!-- Disque solidaire de l'arbre -->
+              <line x1="120" y1="18" x2="120" y2="94" stroke="#1a2550" stroke-width="4"/>
+              <!-- 2 Plaquettes (liées au bâti fixe!) -->
+              <rect x="103" y="22" width="11" height="22" fill="rgba(191,54,32,0.18)" stroke="#bf3620" stroke-width="1.8"/>
+              <rect x="126" y="22" width="11" height="22" fill="rgba(191,54,32,0.18)" stroke="#bf3620" stroke-width="1.8"/>
+              <!-- Bâti fixe (hachures normalisées) -->
+              <path d="M 108 22 L 108 10 L 132 10 L 132 22" fill="none" stroke="#bf3620" stroke-width="1.8"/>
+              <line x1="94" y1="10" x2="146" y2="10" stroke="#1a2550" stroke-width="1.8"/>
+              <line x1="100" y1="10" x2="105" y2="4" stroke="#1a2550" stroke-width="1.2"/>
+              <line x1="110" y1="10" x2="115" y2="4" stroke="#1a2550" stroke-width="1.2"/>
+              <line x1="120" y1="10" x2="125" y2="4" stroke="#1a2550" stroke-width="1.2"/>
+              <line x1="130" y1="10" x2="135" y2="4" stroke="#1a2550" stroke-width="1.2"/>
+              <line x1="140" y1="10" x2="145" y2="4" stroke="#1a2550" stroke-width="1.2"/>
+              <!-- Flèches de pincement F -->
+              <line x1="80" y1="33" x2="98" y2="33" stroke="#bf3620" stroke-width="1.8"/>
+              <polygon points="101 33, 94 29, 94 37" fill="#bf3620"/>
+              <line x1="160" y1="33" x2="142" y2="33" stroke="#bf3620" stroke-width="1.8"/>
+              <polygon points="139 33, 146 29, 146 37" fill="#bf3620"/>
+              <text x="120" y="106" fill="#bf3620" font-size="8.5" font-family="'Geist Mono', monospace" text-anchor="middle">Étrier lié au bâti (0) → Cf</text>
+            </svg>
+          </div>
+          <p class="kin-meta">Même principe de frottement que l'embrayage, mais l'un des éléments (étrier/mâchoires) est <strong>solidaire du bâti fixe</strong> pour immobiliser l'arbre.</p>
+        </div>
+        <a class="kin-link" href="transmission_3d_lab.html#frein">Inspecter en 3D →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: BAC TECHNIQUE COMPARISON TABLE -->
+  <section id="comparatif">
+    <div class="sec-head">
+      <h2>3. Tableau comparatif — Typologie &amp; critères de choix (Bac Technique)</h2>
+      <span class="sec-note">Modèle 3D choisi vs autres variantes rencontrées à l'examen</span>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:15%">Organe</th>
+            <th style="width:17%">Fonction principale</th>
+            <th style="width:18%">Modèle dans le Banc 3D</th>
+            <th style="width:27%">Autres variantes au programme</th>
+            <th style="width:23%">Point clé d'examen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Accouplement</strong></td>
+            <td>Liaison <strong>permanente</strong> entre 2 arbres en prolongement ($r = 1$)</td>
+            <td><span class="pill-t">Élastique à broches</span><br>2 plateaux + 6 broches acier + 6 manchons élastomère</td>
+            <td><strong>Rigide</strong> (manchon goupillé, plateaux boulonnés — exige un alignement parfait) · <strong>Joint d'Oldham</strong> (décalage radial) · <strong>Joint de Cardan</strong> (désalignement angulaire)</td>
+            <td>Ne se désaccouple pas en marche. L'élastomère amortit les vibrations et tolère de faibles défauts.</td>
+          </tr>
+          <tr>
+            <td><strong>2. Embrayage</strong></td>
+            <td>Liaison <strong>temporaire</strong> commandée en marche ($r = 1$ ou débrayé)</td>
+            <td><span class="pill-t">Monodisque à friction</span><br>Volant, disque à garnitures (n = 2 faces), plateau presseur, ressorts, butée &amp; fourchette</td>
+            <td><strong>Instantané</strong> (à griffes / dents — enclenchement à l'arrêt uniquement) · <strong>Multidisque</strong> (grand couple, encombrement réduit) · <strong>Conique</strong> · <strong>Centrifuge</strong> · Commandes mécanique / hydraulique / électromagnétique</td>
+            <td>Toujours vérifier le nombre de surfaces frottantes $n$ ($n=2$ pour un monodisque) dans $C_f = n f F R_{\text{moy}}$.</td>
+          </tr>
+          <tr>
+            <td><strong>3. Boîte de vitesses</strong></td>
+            <td>Modifie la vitesse $N_s$ et le couple $C_s$ (et le sens en MA)</td>
+            <td><span class="pill-t">3 rapports + MA</span><br>Arbre primaire/secondaire coaxiaux + arbre intermédiaire + 2 baladeurs + pignon inverseur</td>
+            <td><strong>Trains simples</strong> vs <strong>trains épicycloïdaux</strong> · <strong>À baladeurs</strong> (engrenages droits) vs <strong>synchronisée</strong> (engrenages hélicoïdaux + cônes de synchro)</td>
+            <td>Compter le nombre $k$ de contacts extérieurs : $r = (-1)^k \frac{\prod Z_{\text{menantes}}}{\prod Z_{\text{menées}}}$. En <strong>MA</strong>, le pignon inverseur ajoute 1 contact ($k$ impair $\Rightarrow r &lt; 0$).</td>
+          </tr>
+          <tr>
+            <td><strong>4. Frein</strong></td>
+            <td>Ralentit ou immobilise un arbre en mouvement (sécurité)</td>
+            <td><span class="pill-a">Disque ventilé + étrier</span><br>Disque fonte + étrier fixe lié au bâti + 2 plaquettes hydrauliques</td>
+            <td><strong>À tambour / mâchoires</strong> (intérieures ou extérieures) · <strong>À sangle</strong> · <strong>Électromagnétique à manque de courant</strong> (sécurité levage/ascenseur) · <strong>Embrayage-frein</strong> combiné</td>
+            <td>Différence fondamentale avec l'embrayage : les plaquettes/mâchoires sont liées au <strong>bâti fixe (0)</strong>. Dissipe $E_c$ en chaleur ($P_f = C_f \cdot \omega$).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION 4: FORMULAS + LIVE CALCULATOR -->
+  <section id="formulaire">
+    <div class="sec-head">
+      <h2>4. Formulaire officiel &amp; calculateur synchronisé avec le Banc 3D</h2>
+      <span class="sec-note">Mêmes dents ($Z$) et mêmes constantes physiques que la simulation 3D</span>
+    </div>
+
+    <div class="formula-grid">
+      <div class="f-list">
+        <div class="f-box">
+          <div class="f-cat">Cinématique de rotation</div>
+          <div class="f-eq">$$\omega = \frac{\pi \cdot N}{30} \qquad P = C \cdot \omega$$</div>
+          <p class="f-desc">$\omega$ en $\text{rad/s}$, $N$ en $\text{tr/min}$, $C$ en $\text{N}\cdot\text{m}$, $P$ en $\text{W}$.</p>
+        </div>
+
+        <div class="f-box">
+          <div class="f-cat">Rapport de transmission (Boîte)</div>
+          <div class="f-eq">$$r = \frac{N_s}{N_e} = \frac{\omega_s}{\omega_e} = (-1)^k \frac{\prod Z_{\text{menantes}}}{\prod Z_{\text{menées}}}$$</div>
+          <p class="f-desc">$k$ = nombre de contacts extérieurs. Si $r &lt; 0$ (MA), l'arbre de sortie tourne en sens inverse.</p>
+        </div>
+
+        <div class="f-box">
+          <div class="f-cat">Couple &amp; Rendement global</div>
+          <div class="f-eq">$$\eta = \frac{P_s}{P_e} \quad\Longrightarrow\quad C_s = \frac{C_e \cdot \eta}{|r|}$$</div>
+          <p class="f-desc">Une réduction ($|r| &lt; 1$) diminue la vitesse $N_s$ mais <strong>multiplie le couple</strong> $C_s$.</p>
+        </div>
+
+        <div class="f-box">
+          <div class="f-cat">Couple transmissible (Embrayage / Frein disque)</div>
+          <div class="f-eq">$$C_f = n \cdot f \cdot F \cdot R_{\text{moy}} \quad,\quad R_{\text{moy}} = \frac{2}{3}\frac{R^3 - r^3}{R^2 - r^2}$$</div>
+          <p class="f-desc">$n$ : nombre de surfaces en contact ($n = 2$), $f$ : coeff. de frottement, $F$ : effort presseur ($\text{N}$).</p>
+        </div>
+      </div>
+
+      <div class="calc-box">
+        <h3>Vérificateur rapide du Banc 3D</h3>
+        <p class="calc-sub">Train fixe $Z_1=22 / Z_2=34$ · 1ʳᵉ $Z_3=16 / Z_4=40$ · 2ᵉ $Z_5=24 / Z_6=32$ · MA $Z_7=16 / Z_{\text{inv}}=16 / Z_8=28$.</p>
+
+        <div class="gear-pills" role="group" aria-label="Choix du rapport">
+          <button class="g-btn" data-g="N">N</button>
+          <button class="g-btn active" data-g="1">1ʳᵉ</button>
+          <button class="g-btn" data-g="2">2ᵉ</button>
+          <button class="g-btn" data-g="3">3ᵉ</button>
+          <button class="g-btn" data-g="R">MA</button>
+        </div>
+
+        <div class="calc-row">
+          <label><span>Vitesse moteur $N_m$</span><b id="c-nm-v">1 500 tr/min</b></label>
+          <input id="c-nm" type="range" min="300" max="3000" step="50" value="1500">
+        </div>
+        <div class="calc-row">
+          <label><span>Couple moteur $C_m$</span><b id="c-cm-v">40 N·m</b></label>
+          <input id="c-cm" type="range" min="10" max="80" step="2" value="40">
+        </div>
+
+        <div class="calc-out" id="calc-out"></div>
+      </div>
+    </div>
+
+    <div class="footer-cta">
+      <div>
+        <h3>Prête à voir chaque pignon, disque et plaquette bouger en 3D ?</h3>
+        <p>Manipule l'accouplement, débraye, passe les 4 rapports, serre le frein et active la Coupe 3D ou la Vue Éclatée.</p>
+      </div>
+      <a href="transmission_3d_lab.html">Lancer le Banc d'Essai 3D →</a>
+    </div>
+  </section>
+</main>
+
+<script>
+// Exact mechanical constants shared with transmission_3d_lab.html
+const GEARS = {
+  N: { name: 'Point Mort (N)', r: 0, eta: 0, formula: 'Baladeurs neutres → aucun engrenage craboté', k: 0 },
+  '1': { name: '1ʳᵉ Vitesse', r: (22 * 16) / (34 * 40), eta: 0.94, formula: '(+1) × (22×16)/(34×40) = 352/1360', k: 2 },
+  '2': { name: '2ᵉ Vitesse', r: (22 * 24) / (34 * 32), eta: 0.94, formula: '(+1) × (22×24)/(34×32) = 528/1088', k: 2 },
+  '3': { name: '3ᵉ Prise directe', r: 1.0, eta: 0.98, formula: 'Prise directe : arbre primaire = arbre secondaire', k: 0 },
+  R: { name: 'Marche Arrière (MA)', r: -(22 * 16) / (34 * 28), eta: 0.90, formula: '(-1)³ × (22×16×16)/(34×16×28) = -352/952', k: 3 },
+};
+
+const SCENARIOS = {
+  start: {
+    title: 'SCÉNARIO 1 · DÉMARRAGE PROGRESSIF EN 1ʳᵉ VITESSE',
+    explain: "Le moteur tourne à 1 500 tr/min. L'accouplement transmet fidèlement la rotation. On relâche progressivement l'embrayage : les garnitures glissent puis adhèrent pour lancer la charge sans caler. La boîte en 1ʳᵉ multiplie le couple par 3,63 !",
+    rel: "Relation clé : l'embrayage assure la progressivité du démarrage, tandis que la 1ʳᵉ vitesse de la boîte fournit le couple élevé nécessaire pour vaincre l'inertie.",
+    gear: '1', clutch: 0.70, brake: 0,
+    embText: 'PROGRESSIF (70%)', embColor: '#b45309', embBg: 'rgba(180,83,9,0.12)',
+    bvText: '1ʳᵉ · r = +0,259', bvColor: '#1f3fa0', bvBg: 'rgba(31,63,160,0.10)',
+    frText: 'RELÂCHÉ (0%)', frColor: '#5b6485', frBg: 'rgba(91,100,133,0.10)',
+    flows: ['green', 'green', 'amber', 'pen', 'pen'],
+    cmds: [true, false, false],
+    rels: [false, true, false]
+  },
+  shift: {
+    title: 'SCÉNARIO 2 · PASSAGE DE VITESSE (DÉBRAYÉ)',
+    explain: "Avant de déplacer le baladeur dans la boîte, l'opérateur appuie sur l'embrayage (0%) : le plateau presseur recule et libère le disque. Le couple transmis à l'arbre primaire tombe à zéro — les crabots peuvent coulisser sans choc ni usure.",
+    rel: "Relation clé Embrayage ↔ Boîte : on ne change jamais de rapport sous couple. L'accouplement amont continue pourtant de tourner avec le moteur !",
+    gear: 'N', clutch: 0, brake: 0,
+    embText: 'DÉBRAYÉ (0%)', embColor: '#bf3620', embBg: 'rgba(191,54,32,0.12)',
+    bvText: 'TRANSITION / N', bvColor: '#5b6485', bvBg: 'rgba(91,100,133,0.10)',
+    frText: 'RELÂCHÉ (0%)', frColor: '#5b6485', frBg: 'rgba(91,100,133,0.10)',
+    flows: ['green', 'green', 'idle', 'idle', 'idle'],
+    cmds: [true, true, false],
+    rels: [true, true, false]
+  },
+  cruise2: {
+    title: 'SCÉNARIO 3 · CROISIÈRE INTERMÉDIAIRE EN 2ᵉ VITESSE',
+    explain: "L'embrayage est totalement embrayé (100%, zéro glissement). La puissance passe par le train fixe Z1/Z2 puis le train Z5/Z6 (r = +0,485) : vitesse de sortie 728 tr/min et couple utile 77,5 N·m.",
+    rel: "Relation clé : l'accouplement élastique filtre les vibrations du moteur tout au long du régime permanent, le frein reste totalement ouvert.",
+    gear: '2', clutch: 1, brake: 0,
+    embText: 'EMBRAYÉ (100%)', embColor: '#1e7a48', embBg: 'rgba(30,122,72,0.12)',
+    bvText: '2ᵉ · r = +0,485', bvColor: '#1f3fa0', bvBg: 'rgba(31,63,160,0.10)',
+    frText: 'RELÂCHÉ (0%)', frColor: '#5b6485', frBg: 'rgba(91,100,133,0.10)',
+    flows: ['green', 'green', 'green', 'pen', 'pen'],
+    cmds: [false, true, false],
+    rels: [false, false, false]
+  },
+  direct3: {
+    title: 'SCÉNARIO 4 · 3ᵉ VITESSE — PRISE DIRECTE (r = 1)',
+    explain: "Le baladeur avant accouple directement l'arbre primaire à l'arbre secondaire ! La puissance ne passe plus par les pignons de l'arbre intermédiaire : vitesse maximale (1 500 tr/min) et rendement optimal (η = 0,98).",
+    rel: "Point d'examen Bac Tech : en prise directe, Ns = Ne = Nm (r = 1) et le rendement est supérieur car il n'y a pas de pertes par engrènement sous charge.",
+    gear: '3', clutch: 1, brake: 0,
+    embText: 'EMBRAYÉ (100%)', embColor: '#1e7a48', embBg: 'rgba(30,122,72,0.12)',
+    bvText: '3ᵉ · PRISE DIRECTE', bvColor: '#1e7a48', bvBg: 'rgba(30,122,72,0.12)',
+    frText: 'RELÂCHÉ (0%)', frColor: '#5b6485', frBg: 'rgba(91,100,133,0.10)',
+    flows: ['green', 'green', 'green', 'green', 'green'],
+    cmds: [false, true, false],
+    rels: [false, false, false]
+  },
+  reverse: {
+    title: 'SCÉNARIO 5 · MARCHE ARRIÈRE (PIGNON INVERSEUR)',
+    explain: "Le baladeur arrière engage le pignon Z8 qui engrène avec le pignon inverseur Zinv (intercalé entre Z7 et Z8). Le nombre de contacts extérieurs passe à k = 3 (impair) : le rapport devient négatif (r = -0,370) et l'arbre de sortie tourne en sens inverse !",
+    rel: "Point d'examen : Zinv apparaît au numérateur ET au dénominateur — il ne modifie pas la valeur absolue du rapport, mais il inverse le sens de rotation.",
+    gear: 'R', clutch: 1, brake: 0,
+    embText: 'EMBRAYÉ (100%)', embColor: '#1e7a48', embBg: 'rgba(30,122,72,0.12)',
+    bvText: 'MA · r = -0,370', bvColor: '#b45309', bvBg: 'rgba(180,83,9,0.14)',
+    frText: 'RELÂCHÉ (0%)', frColor: '#5b6485', frBg: 'rgba(91,100,133,0.10)',
+    flows: ['green', 'green', 'green', 'rev', 'rev'],
+    cmds: [false, true, false],
+    rels: [false, true, false]
+  },
+  brake: {
+    title: "SCÉNARIO 6 · FREINAGE D'ARRÊT & COORDINATION EMBRAYAGE ↔ FREIN",
+    explain: "L'étrier serre ses deux plaquettes sur le disque ventilé (Cf = 378 N·m), transformant l'énergie cinétique de la charge en chaleur. Simultanément, l'embrayage est débrayé pour séparer le moteur afin que le frein ne lutte pas contre le couple moteur !",
+    rel: "Relation clé Embrayage ↔ Frein : ces deux organes sont fonctionnellement antagonistes (transmettre vs arrêter). Dans l'industrie, un embrayage-frein interdit leur action simultanée.",
+    gear: '1', clutch: 0, brake: 1,
+    embText: 'DÉBRAYÉ (0%)', embColor: '#bf3620', embBg: 'rgba(191,54,32,0.12)',
+    bvText: 'DÉCELÉRATION', bvColor: '#5b6485', bvBg: 'rgba(91,100,133,0.10)',
+    frText: 'SERRÉ (100%)', frColor: '#bf3620', frBg: 'rgba(191,54,32,0.16)',
+    flows: ['green', 'green', 'idle', 'brake', 'brake'],
+    cmds: [true, false, true],
+    rels: [false, false, true]
+  }
+};
+
+const ORGANS = {
+  moteur: {
+    tag: 'SOURCE DE PUISSANCE',
+    name: 'Moteur électrique asynchrone (Source)',
+    role: "Fournit la puissance mécanique d'entrée Pm = Cm · ωm à vitesse quasi constante (ici 1 500 tr/min, couple 40 N·m, soit 6,28 kW). Il ne peut pas adapter seul son couple ni inverser instantanément sa charge sous effort.",
+    parts: ['Carcasse ailetée en fonte (refroidissement)', 'Arbre moteur claveté Ø 28 mm', 'Boîte à bornes et pattes de fixation sur bâti'],
+    links: ["Connecté directement à l'Accouplement élastique", "Protégé des calages par l'Embrayage lors du démarrage et du freinage"]
+  },
+  accouplement: {
+    tag: 'ORGANE 01 · TRANSMISSION SANS MODIFICATION DE VITESSE',
+    name: 'Accouplement élastique à broches',
+    role: "Assure une liaison permanente entre l'arbre moteur et l'arbre d'entrée de l'embrayage. Contrairement à un accouplement rigide, ses manchons en élastomère absorbent les chocs de couple et compensent les légers défauts d'alignement.",
+    parts: ['Plateau menant claveté sur arbre moteur', '6 broches en acier traité', '6 manchons élastiques (élastomère) amortisseurs', 'Plateau mené claveté sur arbre intermédiaire'],
+    links: ["Contrairement à l'Embrayage, il est PERMANENT (ne se sépare pas en marche)", "Conserve exactement la vitesse : N₁ = Nₘ (r = 1)"]
+  },
+  embrayage: {
+    tag: 'ORGANE 02 · TRANSMISSION TEMPORAIRE COMMANDÉE',
+    name: 'Embrayage monodisque à friction',
+    role: "Permet d'accoupler ou de désaccoupler à volonté deux arbres coaxiaux en rotation. Le frottement progressif de ses 2 garnitures (n = 2) permet un démarrage souple et coupe le couple avant tout changement de rapport.",
+    parts: ['Volant moteur (plateau menant en fonte)', 'Disque à 2 garnitures de friction + moyeu cannelé', 'Plateau presseur mobile + 6 ressorts de pression', 'Butée à billes & fourchette de débrayage'],
+    links: ["Indispensable à la Boîte de vitesses : débrayer annule le couple avant d'engager un baladeur", "Antagoniste du Frein : on débraye pendant le freinage d'arrêt"]
+  },
+  boite: {
+    tag: 'ORGANE 03 · TRANSMISSION AVEC MODIFICATION DE VITESSE',
+    name: 'Boîte de vitesses à 3 rapports + Marche Arrière',
+    role: "Adapte le couple et la vitesse de rotation entre le moteur et le récepteur grâce à des trains d'engrenages cylindriques sélectionnés par baladeurs. Permet le point mort (N), la réduction (1ʳᵉ, 2ᵉ), la prise directe (3ᵉ) et l'inversion de sens (MA).",
+    parts: ['Arbre primaire (pignon fixe Z1=22)', 'Arbre intermédiaire (Z2=34, Z3=16, Z5=24, Z7=16)', 'Arbre secondaire cannelé (pignons fous Z4, Z6, Z8 + 2 baladeurs)', 'Pignon inverseur Zinv=16 pour la Marche Arrière'],
+    links: ["Reçoit la rotation de l'Embrayage (arbre primaire)", "Multiplie le couple envoyé vers le Frein et le Récepteur : Cs = Ce·η / |r|"]
+  },
+  frein: {
+    tag: 'ORGANE 04 · RALENTISSEMENT & IMMOBILISATION',
+    name: 'Frein à disque ventilé à étrier',
+    role: "Ralentit ou arrête l'arbre récepteur en créant un couple résistant Cf = n·f·F·Rmoy par frottement entre un disque tournant et 2 plaquettes liées au bâti fixe. L'énergie cinétique est dissipée sous forme de chaleur.",
+    parts: ['Disque ventilé en fonte solidaire de l’arbre de sortie', 'Étrier rigide fixé au bâti (0)', '2 pistons hydrauliques et 2 plaquettes de friction'],
+    links: ["Même loi de frottement que l'Embrayage, mais relié au BÂTI FIXE", "Coordonné avec l'Embrayage (débrayage simultané pour isoler le moteur)"]
+  },
+  recepteur: {
+    tag: 'CHARGE UTILE',
+    name: 'Récepteur / Volant d’inertie',
+    role: "Représente l'organe entraîné (roues d'un véhicule, broche de machine-outil, tambour de levage). Il reçoit la vitesse adaptée Ns, le couple utile Cs, et subit directement l'action d'arrêt du frein.",
+    parts: ['Volant d’inertie équilibré avec repères visuels de rotation', 'Palier de sortie à roulement à billes'],
+    links: ["Entraîné par l'arbre secondaire de la Boîte de vitesses", "Ralenti/immobilisé directement par le Frein à disque"]
+  },
+  pilot: {
+    tag: 'CHAÎNE DE COMMANDE',
+    name: 'Pilotage & Coordination des organes',
+    role: "Orchestre l'ordre exact des commandes (opérateur ou automate) : l'accouplement ne nécessite aucune commande, tandis que l'embrayage, la boîte de vitesses et le frein doivent respecter des séquences strictes de sécurité.",
+    parts: ['Commande d’embrayage (fourchette / butée)', 'Sélecteur de vitesses (fourchettes sur baladeurs)', 'Commande de freinage (pression hydraulique étrier)'],
+    links: ["Séquence passage : Débrayer → Sélectionner rapport → Embrayer", "Séquence arrêt : Débrayer + Freiner"]
+  }
+};
+
+function fmtFr(v, d = 0) {
+  return Number(v).toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+}
+
+function applyScenario(key) {
+  const s = SCENARIOS[key];
+  const g = GEARS[s.gear];
+  document.querySelectorAll('.sc-btn').forEach(b => b.classList.toggle('active', b.dataset.sc === key));
+
+  document.getElementById('sc-title').textContent = s.title;
+  document.getElementById('sc-explain').textContent = s.explain;
+  document.getElementById('sc-rel').textContent = s.rel;
+
+  // Compute exact physics
+  const Nm = 1500, Cm = 40;
+  const Ne = s.clutch > 0 ? Nm * (s.clutch < 1 ? 0.85 : 1) : 0;
+  const Ns = s.brake > 0.5 ? 0 : Ne * g.r;
+  const ws = (Math.PI * Math.abs(Ns)) / 30;
+  const Ce = s.clutch > 0 ? Cm : 0;
+  const Cs = (g.r !== 0 && s.clutch > 0 && s.brake < 0.5) ? (Ce * g.eta) / Math.abs(g.r) : 0;
+  const Ps = (Cs * ws) / 1000;
+
+  document.getElementById('k-ne').textContent = fmtFr(Ne, 0);
+  document.getElementById('k-r').textContent = g.r === 0 ? '0' : (g.r > 0 ? '+' : '') + fmtFr(g.r, 3);
+  document.getElementById('k-ns').textContent = (Ns < 0 ? '−' : '') + fmtFr(Math.abs(Ns), 0);
+  document.getElementById('k-cs').textContent = fmtFr(Cs, 1);
+  document.getElementById('k-ps').textContent = fmtFr(Ps, 2);
+
+  // Badges inside SVG
+  const setBadge = (id, bgId, txt, col, bg) => {
+    const el = document.getElementById(id);
+    el.textContent = txt; el.setAttribute('fill', col);
+    if (bgId) document.getElementById(bgId).setAttribute('fill', bg);
+  };
+  setBadge('badge-emb', 'badge-emb-bg', s.embText, s.embColor, s.embBg);
+  setBadge('badge-bv', 'badge-bv-bg', s.bvText, s.bvColor, s.bvBg);
+  setBadge('badge-fr', 'badge-fr-bg', s.frText, s.frColor, s.frBg);
+  setBadge('badge-rec', 'badge-rec-bg',
+    s.brake > 0.5 ? 'ARRÊT (0)' : (Ns === 0 ? 'LIBRE / 0' : `${Ns < 0 ? '↺ ' : '↻ '}${fmtFr(Math.abs(Ns), 0)} tr/min`),
+    s.brake > 0.5 ? '#bf3620' : (Ns < 0 ? '#b45309' : '#1f3fa0'),
+    s.brake > 0.5 ? 'rgba(191,54,32,0.12)' : (Ns < 0 ? 'rgba(180,83,9,0.12)' : 'rgba(31,63,160,0.10)')
+  );
+
+  // Style flow arrows
+  const styles = {
+    green: { stroke: '#1e7a48', w: 2.6, m: 'url(#arrow-green)', cls: 'flow-line flow-active' },
+    pen:   { stroke: '#1f3fa0', w: 2.6, m: 'url(#arrow-pen)',   cls: 'flow-line flow-active' },
+    amber: { stroke: '#b45309', w: 2.6, m: 'url(#arrow-amber)', cls: 'flow-line flow-active' },
+    rev:   { stroke: '#b45309', w: 2.6, m: 'url(#arrow-amber)', cls: 'flow-line flow-reverse' },
+    brake: { stroke: '#bf3620', w: 2.2, m: 'url(#arrow-accent)',cls: 'flow-line' },
+    idle:  { stroke: '#b0b8cc', w: 1.5, m: 'url(#arrow)',       cls: 'flow-line' },
+  };
+  s.flows.forEach((stKey, i) => {
+    const ln = document.getElementById(`flow-${i + 1}`);
+    const lb = document.getElementById(`lbl-f${i + 1}`);
+    const st = styles[stKey];
+    ln.setAttribute('stroke', st.stroke);
+    ln.setAttribute('stroke-width', st.w);
+    ln.setAttribute('marker-end', st.m);
+    ln.setAttribute('class', st.cls);
+    ln.setAttribute('stroke-dasharray', stKey === 'idle' ? '4 4' : '');
+    lb.setAttribute('fill', stKey === 'idle' ? '#9aa3b8' : st.stroke);
+  });
+
+  // Command lines highlight
+  ['cmd-clutch', 'cmd-gearbox', 'cmd-brake'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    const on = s.cmds[i];
+    el.setAttribute('stroke', on ? (i === 2 ? '#bf3620' : '#1f3fa0') : '#9aa3b8');
+    el.setAttribute('stroke-width', on ? '2' : '1.2');
+    el.setAttribute('marker-end', on ? (i === 2 ? 'url(#arrow-accent)' : 'url(#arrow-pen)') : 'url(#arrow)');
+  });
+
+  // Relation buses emphasis
+  ['rel-acc-emb', 'rel-emb-bv', 'rel-emb-fr'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.setAttribute('stroke-width', s.rels[i] ? '2.2' : '1.2');
+    el.setAttribute('opacity', s.rels[i] ? '1' : '0.48');
+  });
+}
+
+function selectOrgan(key) {
+  const o = ORGANS[key]; if (!o) return;
+  document.querySelectorAll('.node-grp').forEach(n => n.classList.toggle('selected', n.dataset.organ === key));
+  document.getElementById('od-tag').textContent = o.tag;
+  document.getElementById('od-name').textContent = o.name;
+  document.getElementById('od-role').textContent = o.role;
+  document.getElementById('od-parts').innerHTML = o.parts.map(x => `<li>${x}</li>`).join('');
+  document.getElementById('od-links').innerHTML = o.links.map(x => `<li>${x}</li>`).join('');
+}
+
+document.querySelectorAll('.sc-btn').forEach(b => b.addEventListener('click', () => applyScenario(b.dataset.sc)));
+document.querySelectorAll('.node-grp').forEach(g => g.addEventListener('click', () => selectOrgan(g.dataset.organ)));
+
+// Mini synchronized calculator
+let calcGear = '1';
+function updateCalc() {
+  const Nm = Number(document.getElementById('c-nm').value);
+  const Cm = Number(document.getElementById('c-cm').value);
+  document.getElementById('c-nm-v').textContent = `${fmtFr(Nm)} tr/min`;
+  document.getElementById('c-cm-v').textContent = `${fmtFr(Cm)} N·m`;
+  const g = GEARS[calcGear];
+  const wm = (Math.PI * Nm) / 30;
+  const Pm = (Cm * wm) / 1000;
+  const Ns = Nm * g.r;
+  const ws = (Math.PI * Math.abs(Ns)) / 30;
+  const Cs = g.r !== 0 ? (Cm * g.eta) / Math.abs(g.r) : 0;
+  const Ps = (Cs * ws) / 1000;
+
+  const rStr = g.r === 0 ? '0 (déconnecté)' : (g.r > 0 ? `+${fmtFr(g.r, 4)}` : `${fmtFr(g.r, 4)} (sens inversé)`);
+  document.getElementById('calc-out').innerHTML = `
+    <div>Rapport <b>${g.name}</b> : <span class="${g.r < 0 ? 'neg' : 'hi'}">r = ${rStr}</span></div>
+    <div>Calcul : ${g.formula}</div>
+    <div>Entrée : ωm = ${fmtFr(wm, 1)} rad/s · Pm = ${fmtFr(Pm, 2)} kW</div>
+    <div>Sortie : <span class="${g.r < 0 ? 'neg' : 'hi'}">Ns = ${fmtFr(Ns, 0)} tr/min</span> · <span class="hi">Cs = ${fmtFr(Cs, 1)} N·m</span> · Ps = ${fmtFr(Ps, 2)} kW</div>
+  `;
+}
+document.querySelectorAll('.g-btn').forEach(b => b.addEventListener('click', () => {
+  calcGear = b.dataset.g;
+  document.querySelectorAll('.g-btn').forEach(x => x.classList.toggle('active', x === b));
+  updateCalc();
+}));
+document.getElementById('c-nm').addEventListener('input', updateCalc);
+document.getElementById('c-cm').addEventListener('input', updateCalc);
+
+// Init
+applyScenario('start');
+selectOrgan('embrayage');
+updateCalc();
+</script>
+</body>
+</html>
